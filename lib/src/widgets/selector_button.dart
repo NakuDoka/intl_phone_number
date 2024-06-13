@@ -39,27 +39,23 @@ class SelectorButton extends StatelessWidget {
     return selectorConfig.selectorType == PhoneInputSelectorType.DROPDOWN
         ? countries.isNotEmpty && countries.length > 1
             ? Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromARGB(255, 187, 187, 187), width: 0.7),
-                    borderRadius: BorderRadius.circular(6)),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 3, bottom: 3),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<Country>(
-                      isDense: false,
-                      key: Key(TestHelper.DropdownButtonKeyValue),
-                      hint: Item(
-                        country: country,
-                        showFlag: selectorConfig.showFlags,
-                        useEmoji: selectorConfig.useEmoji,
-                        leadingPadding: selectorConfig.leadingPadding,
-                        trailingSpace: selectorConfig.trailingSpace,
-                        textStyle: selectorTextStyle,
-                      ),
-                      value: country,
-                      items: mapCountryToDropdownItem(countries),
-                      onChanged: isEnabled ? onCountryChanged : null,
+                decoration:
+                    BoxDecoration(border: Border.all(color: Color(0xFFC9C7C7)), borderRadius: BorderRadius.circular(6)),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<Country>(
+                    isDense: false,
+                    key: Key(TestHelper.DropdownButtonKeyValue),
+                    hint: Item(
+                      country: country,
+                      showFlag: selectorConfig.showFlags,
+                      useEmoji: selectorConfig.useEmoji,
+                      leadingPadding: selectorConfig.leadingPadding,
+                      trailingSpace: selectorConfig.trailingSpace,
+                      textStyle: selectorTextStyle,
                     ),
+                    value: country,
+                    items: mapCountryToDropdownItem(countries),
+                    onChanged: isEnabled ? onCountryChanged : null,
                   ),
                 ),
               )
