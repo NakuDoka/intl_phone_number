@@ -38,43 +38,28 @@ class SelectorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return selectorConfig.selectorType == PhoneInputSelectorType.DROPDOWN
         ? countries.isNotEmpty && countries.length > 1
-            ? InputDecorator(
-                decoration: InputDecoration(
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  border: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<Country>(
-                    key: Key(TestHelper.DropdownButtonKeyValue),
-                    hint: Item(
-                      country: country,
-                      showFlag: selectorConfig.showFlags,
-                      useEmoji: selectorConfig.useEmoji,
-                      leadingPadding: selectorConfig.leadingPadding,
-                      trailingSpace: selectorConfig.trailingSpace,
-                      textStyle: selectorTextStyle,
+            ? Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Color.fromARGB(255, 187, 187, 187), width: 0.7),
+                    borderRadius: BorderRadius.circular(6)),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 3, bottom: 3),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<Country>(
+                      isDense: false,
+                      key: Key(TestHelper.DropdownButtonKeyValue),
+                      hint: Item(
+                        country: country,
+                        showFlag: selectorConfig.showFlags,
+                        useEmoji: selectorConfig.useEmoji,
+                        leadingPadding: selectorConfig.leadingPadding,
+                        trailingSpace: selectorConfig.trailingSpace,
+                        textStyle: selectorTextStyle,
+                      ),
+                      value: country,
+                      items: mapCountryToDropdownItem(countries),
+                      onChanged: isEnabled ? onCountryChanged : null,
                     ),
-                    value: country,
-                    items: mapCountryToDropdownItem(countries),
-                    onChanged: isEnabled ? onCountryChanged : null,
                   ),
                 ),
               )
