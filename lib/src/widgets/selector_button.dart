@@ -38,20 +38,44 @@ class SelectorButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return selectorConfig.selectorType == PhoneInputSelectorType.DROPDOWN
         ? countries.isNotEmpty && countries.length > 1
-            ? DropdownButtonHideUnderline(
-                child: DropdownButton<Country>(
-                  key: Key(TestHelper.DropdownButtonKeyValue),
-                  hint: Item(
-                    country: country,
-                    showFlag: selectorConfig.showFlags,
-                    useEmoji: selectorConfig.useEmoji,
-                    leadingPadding: selectorConfig.leadingPadding,
-                    trailingSpace: selectorConfig.trailingSpace,
-                    textStyle: selectorTextStyle,
+            ? InputDecorator(
+                decoration: InputDecoration(
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
+                    borderRadius: BorderRadius.circular(4),
                   ),
-                  value: country,
-                  items: mapCountryToDropdownItem(countries),
-                  onChanged: isEnabled ? onCountryChanged : null,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xFFC9C7C7), width: 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<Country>(
+                    key: Key(TestHelper.DropdownButtonKeyValue),
+                    hint: Item(
+                      country: country,
+                      showFlag: selectorConfig.showFlags,
+                      useEmoji: selectorConfig.useEmoji,
+                      leadingPadding: selectorConfig.leadingPadding,
+                      trailingSpace: selectorConfig.trailingSpace,
+                      textStyle: selectorTextStyle,
+                    ),
+                    value: country,
+                    items: mapCountryToDropdownItem(countries),
+                    onChanged: isEnabled ? onCountryChanged : null,
+                  ),
                 ),
               )
             : Item(
@@ -69,13 +93,10 @@ class SelectorButton extends StatelessWidget {
             onPressed: countries.isNotEmpty && countries.length > 1 && isEnabled
                 ? () async {
                     Country? selected;
-                    if (selectorConfig.selectorType ==
-                        PhoneInputSelectorType.BOTTOM_SHEET) {
-                      selected = await showCountrySelectorBottomSheet(
-                          context, countries);
+                    if (selectorConfig.selectorType == PhoneInputSelectorType.BOTTOM_SHEET) {
+                      selected = await showCountrySelectorBottomSheet(context, countries);
                     } else {
-                      selected =
-                          await showCountrySelectorDialog(context, countries);
+                      selected = await showCountrySelectorDialog(context, countries);
                     }
 
                     if (selected != null) {
@@ -98,8 +119,7 @@ class SelectorButton extends StatelessWidget {
   }
 
   /// Converts the list [countries] to `DropdownMenuItem`
-  List<DropdownMenuItem<Country>> mapCountryToDropdownItem(
-      List<Country> countries) {
+  List<DropdownMenuItem<Country>> mapCountryToDropdownItem(List<Country> countries) {
     return countries.map((country) {
       return DropdownMenuItem<Country>(
         value: country,
@@ -117,8 +137,7 @@ class SelectorButton extends StatelessWidget {
   }
 
   /// shows a Dialog with list [countries] if the [PhoneInputSelectorType.DIALOG] is selected
-  Future<Country?> showCountrySelectorDialog(
-      BuildContext inheritedContext, List<Country> countries) {
+  Future<Country?> showCountrySelectorDialog(BuildContext inheritedContext, List<Country> countries) {
     return showDialog(
       context: inheritedContext,
       barrierDismissible: true,
@@ -142,16 +161,14 @@ class SelectorButton extends StatelessWidget {
   }
 
   /// shows a Dialog with list [countries] if the [PhoneInputSelectorType.BOTTOM_SHEET] is selected
-  Future<Country?> showCountrySelectorBottomSheet(
-      BuildContext inheritedContext, List<Country> countries) {
+  Future<Country?> showCountrySelectorBottomSheet(BuildContext inheritedContext, List<Country> countries) {
     return showModalBottomSheet(
       context: inheritedContext,
       clipBehavior: Clip.hardEdge,
       isScrollControlled: isScrollControlled,
       backgroundColor: Colors.transparent,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12))),
       useSafeArea: selectorConfig.useBottomSheetSafeArea,
       builder: (BuildContext context) {
         return Stack(children: [
@@ -159,8 +176,7 @@ class SelectorButton extends StatelessWidget {
             onTap: () => Navigator.pop(context),
           ),
           Padding(
-            padding: EdgeInsets.only(
-                bottom: MediaQuery.of(context).viewInsets.bottom),
+            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
             child: DraggableScrollableSheet(
               builder: (BuildContext context, ScrollController controller) {
                 return Directionality(
